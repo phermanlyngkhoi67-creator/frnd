@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Will You Be My Friend? 💖</title>
+
+<link href="vendor/external_0.css" rel="stylesheet">
+
+<style>
+
+/* =========================
+GLOBAL
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    height:100vh;
+    overflow:hidden;
+    background:
+    linear-gradient(
+        135deg,
+        #060816,
+        #14162b,
+        #250a2e
+    );
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+}
+
+/* =========================
+STARS
+========================= */
+
+.stars{
+    position:absolute;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+}
+
+.star{
+    position:absolute;
+    width:2px;
+    height:2px;
+    background:white;
+    border-radius:50%;
+    animation:twinkle 3s infinite;
+}
+
+@keyframes twinkle{
+
+    0%,100%{
+        opacity:0.2;
+    }
+
+    50%{
+        opacity:1;
+    }
+
+}
+
+/* =========================
+FLOATING HEARTS
+========================= */
+
+.hearts span{
+    position:absolute;
+    bottom:-50px;
+    color:rgba(255,255,255,0.15);
+    font-size:22px;
+    animation:float 10s linear infinite;
+}
+
+@keyframes float{
+
+    0%{
+        transform:translateY(0) rotate(0deg);
+        opacity:0;
+    }
+
+    30%{
+        opacity:1;
+    }
+
+    100%{
+        transform:translateY(-120vh) rotate(360deg);
+        opacity:0;
+    }
+
+}
+
+/* =========================
+MAIN CARD
+========================= */
+
+.container{
+    position:relative;
+
+    width:90%;
+    max-width:520px;
+
+    padding:45px 35px;
+
+    border-radius:35px;
+
+    background:
+    rgba(255,255,255,0.08);
+
+    backdrop-filter:blur(18px);
+
+    border:
+    1px solid rgba(255,255,255,0.12);
+
+    box-shadow:
+    0 25px 60px rgba(0,0,0,0.45);
+
+    text-align:center;
+
+    overflow:hidden;
+
+    z-index:2;
+}
+
+/* Glow */
+
+.container::before{
+    content:'';
+
+    position:absolute;
+
+    width:260px;
+    height:260px;
+
+    background:#ff0080;
+
+    filter:blur(140px);
+
+    top:-120px;
+    left:-120px;
+
+    opacity:0.4;
+}
+
+/* =========================
+IMAGE
+========================= */
+
+.image-box{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    margin-bottom:25px;
+}
+
+.glow-ring{
+    position:absolute;
+
+    width:290px;
+    height:290px;
+
+    border-radius:50%;
+
+    background:
+    radial-gradient(
+        rgba(255,0,128,0.4),
+        transparent 70%
+    );
+
+    filter:blur(40px);
+
+    z-index:-1;
+
+    top:-20px;
+}
+
+.profile{
+    width:240px;
+    height:240px;
+
+    object-fit:cover;
+
+    border-radius:30px;
+
+    border:
+    5px solid rgba(255,255,255,0.7);
+
+    background:white;
+
+    padding:8px;
+
+    box-shadow:
+    0 20px 40px rgba(0,0,0,0.3),
+    0 0 35px rgba(255,0,128,0.25);
+
+    transition:0.5s;
+}
+
+.profile:hover{
+
+    transform:
+    scale(1.04)
+    rotate(2deg);
+
+}
+
+/* =========================
+TEXT
+========================= */
+
+h1{
+    color:white;
+    font-size:2.4rem;
+    margin-bottom:18px;
+}
+
+.typing{
+    color:#eee;
+    line-height:1.9;
+    font-size:1rem;
+    min-height:170px;
+    margin-bottom:30px;
+}
+
+/* =========================
+BUTTONS
+========================= */
+
+.buttons{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+button{
+    border:none;
+
+    padding:15px 35px;
+
+    border-radius:50px;
+
+    cursor:pointer;
+
+    font-size:1rem;
+    font-weight:600;
+
+    transition:0.3s;
+}
+
+.yes-btn{
+    background:
+    linear-gradient(
+        45deg,
+        #ff0080,
+        #ff4da6
+    );
+
+    color:white;
+
+    box-shadow:
+    0 10px 25px rgba(255,0,128,0.4);
+}
+
+.yes-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.05);
+
+}
+
+.no-btn{
+    background:
+    rgba(255,255,255,0.1);
+
+    color:white;
+
+    border:
+    1px solid rgba(255,255,255,0.15);
+}
+
+/* =========================
+POPUP
+========================= */
+
+.popup{
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:
+    translate(-50%,-50%)
+    scale(0);
+
+    background:white;
+
+    width:340px;
+
+    padding:35px;
+
+    border-radius:30px;
+
+    text-align:center;
+
+    z-index:999;
+
+    transition:0.4s ease;
+
+    box-shadow:
+    0 20px 50px rgba(0,0,0,0.5);
+}
+
+.popup.active{
+
+    transform:
+    translate(-50%,-50%)
+    scale(1);
+
+}
+
+.popup h2{
+    color:#ff0080;
+    margin-bottom:15px;
+    font-size:2rem;
+}
+
+.popup p{
+    color:#555;
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+/* =========================
+WHATSAPP BUTTON
+========================= */
+
+.whatsapp-btn{
+
+    text-decoration:none;
+
+    background:
+    linear-gradient(
+        45deg,
+        #25D366,
+        #1ebe5d
+    );
+
+    color:white;
+
+    padding:15px 30px;
+
+    border-radius:50px;
+
+    display:inline-block;
+
+    font-weight:600;
+
+    box-shadow:
+    0 10px 25px rgba(37,211,102,0.4);
+
+    transition:0.3s;
+}
+
+.whatsapp-btn:hover{
+
+    transform:
+    translateY(-5px)
+    scale(1.05);
+
+    box-shadow:
+    0 15px 35px rgba(37,211,102,0.5);
+
+}
+
+/* =========================
+CONFETTI
+========================= */
+
+.confetti{
+    position:absolute;
+
+    width:10px;
+    height:10px;
+
+    top:-20px;
+
+    animation:fall linear forwards;
+}
+
+@keyframes fall{
+
+    to{
+
+        transform:
+        translateY(110vh)
+        rotate(720deg);
+
+        opacity:0;
+
+    }
+
+}
+
+/* =========================
+RESPONSIVE
+========================= */
+
+@media(max-width:500px){
+
+    .profile{
+        width:200px;
+        height:200px;
+    }
+
+    h1{
+        font-size:2rem;
+    }
+
+}
+
+</style>
+</head>
+<body>
+
+<!-- STARS -->
+
+<div class="stars" id="stars"></div>
+
+<!-- FLOATING HEARTS -->
+
+<div class="hearts">
+
+    <span style="left:10%; animation-delay:0s;">❤</span>
+    <span style="left:20%; animation-delay:2s;">❤</span>
+    <span style="left:35%; animation-delay:4s;">❤</span>
+    <span style="left:50%; animation-delay:1s;">❤</span>
+    <span style="left:65%; animation-delay:3s;">❤</span>
+    <span style="left:80%; animation-delay:5s;">❤</span>
+
+</div>
+
+<!-- MAIN CARD -->
+
+<div class="container">
+
+    <!-- IMAGE -->
+
+    <div class="image-box">
+
+        <div class="glow-ring"></div>
+
+        <img
+        src="https://i.postimg.cc/cJRDnvk9/Whats-App-Image-2026-02-13-at-15-02-20.jpg"
+        class="profile">
+
+    </div>
+
+    <!-- TITLE -->
+
+    <h1>Hey Beautiful 🌸</h1>
+
+    <!-- TYPING TEXT -->
+
+    <div class="typing" id="typing"></div>
+
+    <!-- BUTTONS -->
+
+    <div class="buttons">
+
+        <button
+        class="yes-btn"
+        onclick="showPopup()">
+
+        Yes 💖
+
+        </button>
+
+        <button
+        class="no-btn"
+        id="noBtn">
+
+        Maybe 😅
+
+        </button>
+
+    </div>
+
+</div>
+
+<!-- POPUP -->
+
+<div class="popup" id="popup">
+
+    <h2>YAYYYY 💕</h2>
+
+    <p>
+
+        You just made my day brighter ✨
+        <br><br>
+
+        I promise our friendship will be full of happiness,
+        laughter and beautiful memories 🌸
+
+    </p>
+
+    <!-- WHATSAPP BUTTON -->
+
+    <a
+    href="https://wa.me/918731801916?text=Hey%20💖%20I%20accepted%20your%20friendship%20request!"
+    target="_blank"
+    class="whatsapp-btn">
+
+    💬 Chat With Me
+
+    </a>
+
+</div>
+
+<script>
+
+/* =========================
+TYPEWRITER EFFECT
+========================= */
+
+const text = `
+
+Sometimes strangers become the most special people in our lives...
+
+And honestly,
+I would really love to know you better,
+talk with you,
+laugh with you,
+and create beautiful memories together ✨
+
+So...
+Will you be my friend? 💖
+
+`;
+
+let i = 0;
+
+function typeText(){
+
+    if(i < text.length){
+
+        document
+        .getElementById("typing")
+        .innerHTML += text.charAt(i);
+
+        i++;
+
+        setTimeout(typeText,40);
+    }
+}
+
+typeText();
+
+/* =========================
+RUNNING BUTTON
+========================= */
+
+const noBtn =
+document.getElementById("noBtn");
+
+const texts = [
+
+    "Are you sure? 😭",
+    "Please? 🥺",
+    "Friendship is free 😭",
+    "Don't do this 💔",
+    "I'll cry 😭"
+
+];
+
+let txt = 0;
+
+noBtn.addEventListener("mouseover",()=>{
+
+    const x =
+    Math.floor(Math.random()*300)-150;
+
+    const y =
+    Math.floor(Math.random()*300)-150;
+
+    noBtn.style.transform =
+    `translate(${x}px,${y}px)`;
+
+    noBtn.innerHTML = texts[txt];
+
+    txt = (txt + 1) % texts.length;
+
+});
+
+/* =========================
+SHOW POPUP
+========================= */
+
+function showPopup(){
+
+    document
+    .getElementById("popup")
+    .classList.add("active");
+
+    confettiEffect();
+}
+
+/* =========================
+CONFETTI EFFECT
+========================= */
+
+function confettiEffect(){
+
+    for(let i=0;i<120;i++){
+
+        const confetti =
+        document.createElement("div");
+
+        confetti.classList.add("confetti");
+
+        confetti.style.left =
+        Math.random()*100 + "vw";
+
+        confetti.style.background =
+        `hsl(${Math.random()*360},
+        100%,70%)`;
+
+        confetti.style.animationDuration =
+        Math.random()*3 + 2 + "s";
+
+        document.body.appendChild(confetti);
+
+        setTimeout(()=>{
+
+            confetti.remove();
+
+        },5000);
+    }
+}
+
+/* =========================
+GENERATE STARS
+========================= */
+
+const stars =
+document.getElementById("stars");
+
+for(let i=0;i<250;i++){
+
+    const star =
+    document.createElement("div");
+
+    star.classList.add("star");
+
+    star.style.left =
+    Math.random()*100 + "vw";
+
+    star.style.top =
+    Math.random()*100 + "vh";
+
+    star.style.animationDuration =
+    Math.random()*3 + 2 + "s";
+
+    stars.appendChild(star);
+}
+
+</script>
+
+</body>
+</html>
